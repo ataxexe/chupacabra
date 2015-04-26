@@ -9,39 +9,20 @@ public class Main {
   public static void main(String[] args) throws Exception {
     if (args.length == 0) {
       printUsage();
-      return;
-    }
-    List<String> argsList = new ArrayList<>();
-    for (String arg : args) {
-      argsList.add(arg);
-    }
-    Map<String, Object> argsMap = new HashMap<>();
-    Iterator<String> argsIterator = argsList.iterator();
-    while(argsIterator.hasNext()) {
-      String arg = argsIterator.next();
-      if (arg.startsWith("--")) {
-        if (arg.contains("=")) {
-          String[] option = arg.substring(2).split("=");
-          argsMap.put(normalize(option[0]), option[1]);
-        } else {
-          argsMap.put(normalize(arg.substring(2)), true);
-        }
-        argsIterator.remove();
-      }
+      System.exit(0);
     }
     Options options = new Options();
-    copy().from(argsMap).to(options);
-
-    String sql = argsList.get(0);
-
-    final Query query = options.createQuery();
+    String sql = extractParameters(args, options);
+    Query query = options.createQuery();
     Statistics statistics = query.getStatistics();
-    Thread thread = new Thread(() -> query.execute(sql));
-    thread.start();
+
+    new Thread(() -> query.execute(sql)).start();
+
     while (!statistics.isFinished()) {
       System.out.print("\r" + statistics + "                      ");
       Thread.sleep(100);
     }
+
     System.out.print("\r" + statistics + "                      ");
     System.out.println();
   }
@@ -58,6 +39,28 @@ public class Main {
       }
     }
     return builder.toString();
+  }
+
+  private static String extractParameters(String[] args, Object target) {
+    List<String> argsList = new ArrayList<>();
+    argsList.addAll(Arrays.asList(args));
+    Map<String, Object> argsMap = new HashMap<>();
+    Iterator<String> argsIterator = argsList.iterator();
+    while(argsIterator.hasNext()) {
+      String arg = argsIterator.next();
+      if (arg.startsWith("--")) {
+        if (arg.contains("=")) {
+          String[] option = arg.substring(2).split("=");
+          argsMap.put(normalize(option[0]), option[1]);
+        } else {
+          argsMap.put(normalize(arg.substring(2)), true);
+        }
+        argsIterator.remove();
+      }
+    }
+    copy().from(argsMap).to(target);
+
+    return argsList.get(0);
   }
 
   private static void printUsage() {
