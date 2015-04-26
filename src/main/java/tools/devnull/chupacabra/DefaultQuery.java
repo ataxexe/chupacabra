@@ -98,7 +98,6 @@ public class DefaultQuery implements Query {
           reader.read(resultSet, i, statistics);
         }
       }
-      statistics.finish();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
@@ -117,6 +116,7 @@ public class DefaultQuery implements Query {
       } catch (Exception e) {
         e.printStackTrace();
       }
+      statistics.finish();
     }
   }
 }
