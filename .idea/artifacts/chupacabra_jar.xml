@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="chupacabra:jar">
+    <output-path>$PROJECT_DIR$/target/artifacts</output-path>
+    <root id="archive" name="chupacabra.jar">
+      <element id="module-output" name="chupacabra" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jboss/teiid/teiid-common-core/8.7.1.redhat-8/teiid-common-core-8.7.1.redhat-8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jboss/teiid/teiid-client/8.7.1.redhat-8/teiid-client-8.7.1.redhat-8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/tools/devnull/trugger/5.1.1/trugger-5.1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
