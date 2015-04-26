@@ -10,8 +10,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.jboss.teiid:teiid-client:8.7.1.redhat-8" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.teiid:teiid-common-core:8.7.1.redhat-8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.teiid:teiid-client:8.7.1.redhat-8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.teiid:teiid-common-core:8.7.1.redhat-8" level="project" />
     <orderEntry type="library" name="Maven: tools.devnull:trugger:5.1.1" level="project" />
   </component>
 </module>
