@@ -91,6 +91,7 @@ public class DefaultQuery implements Query {
         types[i - 1] = metaData.getColumnType(i);
       }
       DataReader reader;
+      statistics.startedProcessingRows();
       while (resultSet.next()) {
         statistics.nextRow();
         for (int i = 1; i <= count; i++) {

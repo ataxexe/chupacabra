@@ -35,8 +35,10 @@ public class Statistics {
 
   private int currentFormat = 0;
   private long startTime;
+  private long startRowProcessingTime;
 
   private long elapsed;
+  private long elapsedInRowProcessing;
   private long speed;
   private int row;
 
@@ -45,6 +47,7 @@ public class Statistics {
   public void reset() {
     startTime = System.currentTimeMillis();
     elapsed = 0;
+    elapsedInRowProcessing = 0;
     speed = 0;
     row = 0;
     status = Status.STOPPED;
@@ -57,15 +60,23 @@ public class Statistics {
     }
   }
 
-  public void nextRow() {
+  public void startedProcessingRows() {
     status = Status.SUCKING;
+    startRowProcessingTime = System.currentTimeMillis();
+  }
+
+  public void nextRow() {
     elapsed = (System.currentTimeMillis() - startTime);
-    speed = row++ * 1000 / elapsed;
+    elapsedInRowProcessing = (System.currentTimeMillis() - startRowProcessingTime);
+    if (elapsedInRowProcessing > 0) {
+      speed = row++ * 1000 / elapsedInRowProcessing;
+    }
   }
 
   public void finish() {
     elapsed = (System.currentTimeMillis() - startTime);
-    speed = row * 1000 / elapsed;
+    elapsedInRowProcessing = (System.currentTimeMillis() - startRowProcessingTime);
+    speed = row * 1000 / elapsedInRowProcessing;
     status = Status.FINISHED;
   }
 
