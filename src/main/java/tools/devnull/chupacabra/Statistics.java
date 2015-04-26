@@ -21,8 +21,6 @@ public class Statistics {
     }
   }
 
-
-
   private enum Status {
     STOPPED,
     CONNECTING,
