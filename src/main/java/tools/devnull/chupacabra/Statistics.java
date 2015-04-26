@@ -37,7 +37,6 @@ public class Statistics {
   private long startTime;
   private long startRowProcessingTime;
 
-  private long elapsed;
   private long elapsedInRowProcessing;
   private long speed;
   private int row;
@@ -46,7 +45,6 @@ public class Statistics {
 
   public void reset() {
     startTime = System.currentTimeMillis();
-    elapsed = 0;
     elapsedInRowProcessing = 0;
     speed = 0;
     row = 0;
@@ -66,7 +64,6 @@ public class Statistics {
   }
 
   public void nextRow() {
-    elapsed = (System.currentTimeMillis() - startTime);
     elapsedInRowProcessing = (System.currentTimeMillis() - startRowProcessingTime);
     if (elapsedInRowProcessing > 0) {
       speed = row++ * 1000 / elapsedInRowProcessing;
@@ -74,7 +71,6 @@ public class Statistics {
   }
 
   public void finish() {
-    elapsed = (System.currentTimeMillis() - startTime);
     elapsedInRowProcessing = (System.currentTimeMillis() - startRowProcessingTime);
     speed = row * 1000 / elapsedInRowProcessing;
     status = Status.FINISHED;
@@ -82,18 +78,19 @@ public class Statistics {
 
   @Override
   public String toString() {
+    double time = (System.currentTimeMillis() - startTime) / 1000.0;
     switch (status) {
       case CONNECTING:
-        return "Connecting...";
+        return String.format("Connecting... | %.2f seconds", time);
       case GETTING_METADATA:
-        return "Getting metadata";
+        return String.format("Getting metadata | %.2f seconds", time);
       case QUERYING:
-        return "Querying database";
+        return String.format("Querying database | %.2f seconds", time);
       case STOPPED:
         return "Stopped";
     }
     return String.format("Rows: %d (%.2f %s read | %d rows/second) | %.2f seconds", row,
-        bytesRead / BASE_VALUES[currentFormat], FORMAT[currentFormat], speed, elapsed / 1000.0);
+        bytesRead / BASE_VALUES[currentFormat], FORMAT[currentFormat], speed, time);
   }
 
   public void querying() {
