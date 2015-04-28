@@ -26,6 +26,8 @@ public class DefaultQuery implements Query {
     this.url = url;
     this.user = user;
     this.password = password;
+
+    initialize();
   }
 
   @Override
@@ -41,8 +43,7 @@ public class DefaultQuery implements Query {
     }
   }
 
-  @Override
-  public Query basic() {
+  private Query initialize() {
     readAllUsing(new DefaultDataReader());
 
     register(new DecimalDataReader());
@@ -54,7 +55,6 @@ public class DefaultQuery implements Query {
   @Override
   public Query readLobs() {
     register(new ClobDataReader());
-    register(new BlobDataReader());
     return this;
   }
 

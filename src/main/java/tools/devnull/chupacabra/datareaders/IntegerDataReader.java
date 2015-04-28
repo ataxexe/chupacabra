@@ -12,6 +12,5 @@ public class IntegerDataReader implements DataReader {
   @Override
   public void read(ResultSet resultSet, int column, Statistics statistics) throws Exception {
     resultSet.getInt(column);
-    statistics.readed(Statistics.INT);
   }
 }

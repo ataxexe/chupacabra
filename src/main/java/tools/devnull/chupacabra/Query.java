@@ -5,8 +5,6 @@ public interface Query {
 
   void readAllUsing(DataReader reader);
 
-  Query basic();
-
   Query readLobs();
 
   Query register(DataReader reader);

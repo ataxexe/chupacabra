@@ -2,15 +2,6 @@ package tools.devnull.chupacabra;
 
 public class Statistics {
 
-  private static final int BIT_SIZE = 8;
-
-  public static final int BYTE = 8 / BIT_SIZE;
-  public static final int INT = 32 / BIT_SIZE;
-  public static final int LONG = 64 / BIT_SIZE;
-  public static final int CHAR = 16 / BIT_SIZE;
-  public static final int FLOAT = 32 / BIT_SIZE;
-  public static final int DOUBLE = 64 / BIT_SIZE;
-
   private static final String[] FORMAT = {"bytes", "KB", "MB", "GB"};
   private static final int POWER = 1024;
   private static double[] BASE_VALUES = new double[FORMAT.length];
@@ -29,7 +20,7 @@ public class Statistics {
     SUCKING,
     FINISHED
   }
-  private long bytesRead = 0;
+  private long lobBytesRead = 0;
 
   private int currentFormat = 0;
   private long startTime;
@@ -50,8 +41,8 @@ public class Statistics {
   }
 
   public void readed(int bytes) {
-    bytesRead += bytes;
-    if(currentFormat < FORMAT.length && bytesRead > BASE_VALUES[currentFormat + 1]) {
+    lobBytesRead += bytes;
+    if(currentFormat < FORMAT.length - 1 && lobBytesRead > BASE_VALUES[currentFormat + 1]) {
       currentFormat++;
     }
   }
@@ -64,8 +55,9 @@ public class Statistics {
   public void nextRow() {
     elapsedInRowProcessing = (System.currentTimeMillis() - startRowProcessingTime);
     if (elapsedInRowProcessing > 0) {
-      speed = row++ * 1000 / elapsedInRowProcessing;
+      speed = row * 1000 / elapsedInRowProcessing;
     }
+    row++;
   }
 
   public void finish() {
@@ -84,11 +76,12 @@ public class Statistics {
         return String.format("Getting metadata | %.2f seconds", time);
       case QUERYING:
         return String.format("Querying database | %.2f seconds", time);
-      case STOPPED:
-        return "Stopped";
     }
-    return String.format("Rows: %d (%.2f %s read | %d rows/second) | %.2f seconds", row,
-        bytesRead / BASE_VALUES[currentFormat], FORMAT[currentFormat], speed, time);
+    if (lobBytesRead > 0) {
+      return String.format("Rows: %d | %d rows/second | %.2f seconds | %.2f %s of lobs readed", row, speed, time,
+          lobBytesRead / BASE_VALUES[currentFormat], FORMAT[currentFormat]);
+    }
+    return String.format("Rows: %d | %d rows/second | %.2f seconds", row, speed, time);
   }
 
   public void querying() {

@@ -19,7 +19,7 @@ public class ClobDataReader implements DataReader {
     Reader reader = clob.getCharacterStream();
     CharBuffer buffer = CharBuffer.allocate((int) clob.length());
     reader.read(buffer);
-    statistics.readed(buffer.length() * Statistics.CHAR);
+    statistics.readed(buffer.length() * 16); // 1 char = 16 bytes
     clob.free();
   }
 

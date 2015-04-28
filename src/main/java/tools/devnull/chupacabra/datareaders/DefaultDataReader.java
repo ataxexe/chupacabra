@@ -10,8 +10,7 @@ public class DefaultDataReader implements DataReader {
 
   @Override
   public void read(ResultSet resultSet, int column, Statistics statistics) throws SQLException {
-    Object object = resultSet.getObject(column);
-    statistics.readed(object.toString().length() * Statistics.CHAR);
+    resultSet.getObject(column);
   }
 
 }

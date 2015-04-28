@@ -13,6 +13,5 @@ public class DecimalDataReader implements DataReader {
   @Override
   public void read(ResultSet resultSet, int column, Statistics statistics) throws Exception {
     resultSet.getBigDecimal(column);
-    statistics.readed(Statistics.DOUBLE);
   }
 }

@@ -18,14 +18,6 @@ public class Options {
 
   public Query createQuery() {
     Query query = new DefaultQuery(connectionUrl, user, password);
-    if (type != null) {
-      switch (type) {
-        case "teiid":
-          query = new TeiidQuery(query);
-          break;
-      }
-    }
-    query.basic();
     if (readLobs) {
       query.readLobs();
     }

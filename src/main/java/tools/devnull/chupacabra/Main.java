@@ -24,11 +24,11 @@ public class Main {
     new Thread(() -> query.execute(sql)).start();
 
     while (!statistics.isFinished()) {
-      System.out.print("\r" + statistics + "                      ");
+      System.out.print("\r" + statistics + " ");
       Thread.sleep(100);
     }
 
-    System.out.print("\r" + statistics + "                      ");
+    System.out.print("\r" + statistics + " ");
     System.out.println();
   }
 
@@ -75,7 +75,6 @@ public class Main {
     System.out.println("  --connection-url\tSets the connection url");
     System.out.println("  --user\t\tSets the user");
     System.out.println("  --password\t\tSets the password");
-    System.out.println("  --type\t\tUses specific driver readers: (teiid)");
     System.out.println("  --read-lobs\t\tFetch lobs from database");
     System.out.println("  --driver-class\tSet the driver class (for non JDBC 4.0 drivers)");
   }

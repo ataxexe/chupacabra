@@ -11,7 +11,6 @@ import java.sql.Types;
 public class VarcharDataReader implements DataReader {
   @Override
   public void read(ResultSet resultSet, int column, Statistics statistics) throws Exception {
-    String string = resultSet.getString(column);
-    statistics.readed(string.length() * Statistics.CHAR);
+    resultSet.getString(column);
   }
 }

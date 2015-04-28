@@ -1,11 +1,9 @@
 <component name="libraryTable">
-  <library name="Maven: tools.devnull:trugger:5.1.1">
+  <library name="Gradle: tools.devnull:trugger:5.1.1">
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/tools/devnull/trugger/5.1.1/trugger-5.1.1.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/tools/devnull/trugger/5.1.1/trugger-5.1.1-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/tools/devnull/trugger/5.1.1/trugger-5.1.1-sources.jar!/" />
     </SOURCES>
