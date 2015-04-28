@@ -1,11 +1,17 @@
 package tools.devnull.chupacabra;
 
-import tools.devnull.chupacabra.datareaders.*;
+import tools.devnull.chupacabra.datareaders.ClobDataReader;
+import tools.devnull.chupacabra.datareaders.DefaultDataReader;
 import tools.devnull.trugger.util.registry.MapRegistry;
 import tools.devnull.trugger.util.registry.Registry;
 
 import java.lang.reflect.Field;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.List;
 
 import static tools.devnull.trugger.reflection.FieldPredicates.type;
@@ -27,7 +33,7 @@ public class DefaultQuery implements Query {
     this.user = user;
     this.password = password;
 
-    initialize();
+    readAllUsing(new DefaultDataReader());
   }
 
   @Override
@@ -41,15 +47,6 @@ public class DefaultQuery implements Query {
     for (Field type : types) {
       readers.register(reader).to(handle(type).value());
     }
-  }
-
-  private Query initialize() {
-    readAllUsing(new DefaultDataReader());
-
-    register(new DecimalDataReader());
-    register(new IntegerDataReader());
-    register(new VarcharDataReader());
-    return this;
   }
 
   @Override
