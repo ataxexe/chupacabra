@@ -1,0 +1,38 @@
+apply plugin: 'maven'
+apply plugin: 'java'
+
+configurations {
+    project.group = "tools.devnull"
+
+    project.targetCompatibility = "1.8"
+    project.sourceCompatibility = "1.8"
+
+    project.ext {
+        drivers = [
+                'jdv'   : [group: 'org.jboss.teiid', name: 'teiid-client', version: '8.7.1.redhat-8'],
+                'mysql' : [group: 'mysql', name: 'mysql-connector-java', version: '5.1.5']
+        ]
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'tools.devnull', name: 'trugger', version: '5.1.1'
+
+    project.properties.each { key, value ->
+        if(key == 'jdbc') {
+            compile project.ext['drivers'][value]
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes("Main-Class" : "tools.devnull.chupacabra.Main")
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
