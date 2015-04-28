@@ -25,5 +25,5 @@ Options:
 
 If you don't want to include the jdbc driver on your classpath, you can build the package with it by:
 
-1- Adding the information in `build.gradle` (look for the `drivers` extra property)
-2- Running the build with `-Pjdbc=$DRIVER`
+1. Adding the information in `build.gradle` (look for the `drivers` extra property)
+2. Running the build with `-Pjdbc=$DRIVER`
