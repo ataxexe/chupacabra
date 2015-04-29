@@ -13,6 +13,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Gradle: tools.devnull:trugger:5.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: tools.devnull:trugger:5.1.1" level="project" />
+    <orderEntry type="module-library" scope="RUNTIME">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jboss/jdv/jdv-6.1/dataVirtualization/jdbc/teiid-8.7.1.redhat-8-jdbc.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -4,8 +4,8 @@ apply plugin: 'java'
 configurations {
     project.group = "tools.devnull"
 
-    project.targetCompatibility = "1.8"
-    project.sourceCompatibility = "1.8"
+    project.targetCompatibility = "1.6"
+    project.sourceCompatibility = "1.6"
 
     project.ext {
         drivers = [

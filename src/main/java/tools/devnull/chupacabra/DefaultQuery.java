@@ -2,25 +2,28 @@ package tools.devnull.chupacabra;
 
 import tools.devnull.chupacabra.datareaders.ClobDataReader;
 import tools.devnull.chupacabra.datareaders.DefaultDataReader;
-import tools.devnull.trugger.util.registry.MapRegistry;
-import tools.devnull.trugger.util.registry.Registry;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.sql.Types;
-import java.util.List;
-
-import static tools.devnull.trugger.reflection.FieldPredicates.type;
-import static tools.devnull.trugger.reflection.Reflection.fields;
-import static tools.devnull.trugger.reflection.Reflection.handle;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DefaultQuery implements Query {
 
-  private final Registry<Integer, DataReader> readers = new MapRegistry<>();
+  private final Map<Integer, DataReader> readers = new HashMap<Integer, DataReader>(){
+    private DataReader defaultDataReader = new DefaultDataReader();
+
+    @Override
+    public DataReader get(Object o) {
+      if (!containsKey(o)) {
+        return defaultDataReader;
+      }
+      return super.get(o);
+    }
+  };
   
   private final String url;
   private final String user;
@@ -32,21 +35,11 @@ public class DefaultQuery implements Query {
     this.url = url;
     this.user = user;
     this.password = password;
-
-    readAllUsing(new DefaultDataReader());
   }
 
   @Override
   public Statistics getStatistics() {
     return statistics;
-  }
-
-  @Override
-  public void readAllUsing(DataReader reader) {
-    List<Field> types = fields().filter(type(int.class)).in(Types.class);
-    for (Field type : types) {
-      readers.register(reader).to(handle(type).value());
-    }
   }
 
   @Override
@@ -62,7 +55,7 @@ public class DefaultQuery implements Query {
       throw new IllegalArgumentException("The reader " + reader.getClass() + " must declare a @Reads annotation.");
     }
     for (int i : types.value()) {
-      readers.register(reader).to(i);
+      readers.put(i, reader);
     }
     return this;
   }
@@ -92,7 +85,7 @@ public class DefaultQuery implements Query {
       while (resultSet.next()) {
         statistics.nextRow();
         for (int i = 1; i <= count; i++) {
-          reader = readers.registryFor(types[i - 1]);
+          reader = readers.get(types[i - 1]);
           reader.read(resultSet, i, statistics);
         }
       }
