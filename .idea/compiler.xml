@@ -23,8 +23,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="chupacabra" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="chupacabra_main" target="1.8" />
+      <module name="chupacabra_test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

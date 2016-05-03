@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/chupacabra.iml" filepath="$PROJECT_DIR$/chupacabra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chupacabra.iml" filepath="$PROJECT_DIR$/.idea/modules/chupacabra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chupacabra_main.iml" filepath="$PROJECT_DIR$/.idea/modules/chupacabra_main.iml" group="chupacabra" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/chupacabra_test.iml" filepath="$PROJECT_DIR$/.idea/modules/chupacabra_test.iml" group="chupacabra" />
     </modules>
   </component>
 </project>

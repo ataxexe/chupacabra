@@ -4,8 +4,8 @@ apply plugin: 'java'
 configurations {
     project.group = "tools.devnull"
 
-    project.targetCompatibility = "1.6"
-    project.sourceCompatibility = "1.6"
+    project.sourceCompatibility = "1.8"
+    project.targetCompatibility = "1.8"
 
     project.ext {
         drivers = [
@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     compile group: 'tools.devnull', name: 'trugger', version: '5.1.1'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
 
     project.properties.each { key, value ->
         if(key == 'jdbc') {
