@@ -30,14 +30,13 @@ public class Driver implements java.sql.Driver {
       String realDriver = matcher.group("realDriver");
       String realUrl = url.replaceAll(pattern.pattern(), "jdbc:$2");
       try {
-        logger.info("Loading driver " + realDriver);
         // load the real driver
         Class.forName(realDriver);
       } catch (ClassNotFoundException e) {
         throw new RuntimeException(e);
       }
       logger.info("Creating connection to" + realUrl);
-      return new MethodDumper<>(Connection.class).createProxy(DriverManager.getConnection(url, info));
+      return new MethodDumper<>(Connection.class).createProxy(DriverManager.getConnection(realUrl, info));
     } else {
       throw new SQLException();
     }
