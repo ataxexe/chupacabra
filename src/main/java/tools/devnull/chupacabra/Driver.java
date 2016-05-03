@@ -37,7 +37,7 @@ public class Driver implements java.sql.Driver {
         throw new RuntimeException(e);
       }
       logger.info("Creating connection to" + realUrl);
-      return FakeConnection.newConnection(realUrl, info);
+      return new MethodDumper<>(Connection.class).createProxy(DriverManager.getConnection(url, info));
     } else {
       throw new SQLException();
     }
